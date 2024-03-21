@@ -13,7 +13,6 @@ from Compress.logicaComprension import (comprimir_audio,
                                descomprimir_audio, 
                                descomprimir_audio_tamaño_corto, 
                                descomprimir_audio_tamaño_largo)
-#from logicaDescomprension import (descomprimir_audio, descomprimir_audio_tamaño_corto,descomprimir_audio_tamaño_largo)
 
 
 class TestComprension(unittest.TestCase):
@@ -26,7 +25,7 @@ class TestComprension(unittest.TestCase):
 
     """
 
-    #CASO NORMAL 1
+    
     def test_comprimir_audio_corto(self): 
         archivo_original = 'audio1.mp3'
         archivo_comprimido = 'audio1_compres.gz'
@@ -35,7 +34,7 @@ class TestComprension(unittest.TestCase):
         self.assertEqual(gzip.open(archivo_comprimido, 'rb').read() , gzip.open(archivo_comprension_esperada, 'rb').read())
     
 
-    #CASO NORMAL 2
+    
     def test_comprimir_audio_largo(self): 
         archivo_original = 'largo1.mp3'
         archivo_comprimido = 'audio1_largo_compres.gz'
@@ -44,7 +43,7 @@ class TestComprension(unittest.TestCase):
         self.assertEqual(gzip.open(archivo_comprimido, 'rb').read() , gzip.open(archivo_comprension_esperada, 'rb').read())
     
     
-    #CASO NORMAL 3
+
     def test_comprimir_audio_any(self): 
         archivo_original = 'audio269.mp3'
         archivo_comprimido = 'diferente_comprimido.gz'
@@ -53,32 +52,30 @@ class TestComprension(unittest.TestCase):
         self.assertEqual(gzip.open(archivo_comprimido, 'rb').read() , gzip.open(archivo_comprension_esperada, 'rb').read())
 
 
-    #CASO ERROR 1   
+ 
     def test_comprimir_extension_diferente(self): 
         archivo_original = 'diferente.wav' 
         archivo_comprimido ='compress_dif.wav'
         self.assertRaises(logicaComprension.ErrorExtension, comprimir_audio, archivo_original, archivo_comprimido)
     
 
-    #CASO ERROR 2
+    
     def test_comprimir_ruta_vacia(self): 
         archivo_original = ' '  
         archivo_comprimido =' '
         self.assertRaises(logicaComprension.VacioError, comprimir_audio, archivo_original, archivo_comprimido)
     
-    #CASO ERROR 3
     def test_comprimir_audio_no_existente(self):
         archivo_original = 'notexist.mp3'
         archivo_comprimido = 'compress_none.gz'
         self.assertRaises(logicaComprension.ErrorNoExist, comprimir_audio, archivo_original, archivo_comprimido)
     
-    #CASO ERROR 4
+    
     def test_comprimir_archivo_comprimido(self): 
         archivo_original = 'audio1_compres.gz'
         archivo_comprimido = 'compress_none.gz'
         self.assertRaises(logicaComprension.ErrorArchivoComprimido,comprimir_audio,archivo_original,archivo_comprimido)
     
-    #CASO EXCEPCIONAL 1
     def test_comprimir_nombre_archivo_largo(self):  
         archivo_original = 'audiolongitudlargo.mp3'
         archivo_comprimido = 'compress_largo.gz'
@@ -88,7 +85,6 @@ class TestComprension(unittest.TestCase):
         except logicaComprension.LongitudExcesiva:
             pass
 
-    #CASO EXPECIONAL 2
     def test_comprimir_archivo_caracter_especial(self):
         archivo_original = 'audio@.mp3'
         archivo_comprimido = 'compress_especial.gz'
@@ -110,7 +106,6 @@ class PruebasDescomprension(unittest.TestCase):
         
     """
 
-    #CASO NORMAL 1
     def test_descomprimir_audio_corto(self): 
         archivo_original = 'audio1.mp3'
         archivo_comprimido = 'audio4.gz'
@@ -118,7 +113,7 @@ class PruebasDescomprension(unittest.TestCase):
         descomprimir_audio_tamaño_corto(archivo_comprimido, archivo_descomprimido)
         self.assertTrue(archivo_original, archivo_descomprimido)
     
-    #CASO NORMAL 2
+  
     def test_descomprimir_audio_largo(self): 
         archivo_original = 'largo1.mp3'
         archivo_comprimido = 'audio4.gz'
@@ -126,27 +121,24 @@ class PruebasDescomprension(unittest.TestCase):
         descomprimir_audio_tamaño_largo(archivo_comprimido, archivo_descomprimido)
         self.assertTrue(archivo_original, archivo_descomprimido)   
 
-    #CASO NORMAL 3
     def test_descomprimir_audio_any(self): 
         archivo_original = 'diferente.wav'
         archivo_comprimido = 'diferente_compres.gz'
         archivo_descomprimido ='diferente_unzipped.wav'
-        descomprimir_audio(archivo_comprimido, archivo_descomprimido) #any
+        descomprimir_audio(archivo_comprimido, archivo_descomprimido)
         self.assertTrue(archivo_original, archivo_descomprimido)
     
-    #CASO ERROR 1   
+   
     def test_descomprimir_extension_diferente(self): 
         archivo_comprimido = 'diferente_compres.rar' 
         archivo_descomprimido ='compress_diferente.wav'
         self.assertRaises(logicaComprension.ErrorExtension, descomprimir_audio, archivo_comprimido, archivo_descomprimido)
-      
-    #CASO ERROR 2
+
     def test_descomprimir_audio_no_existente(self):  
         archivo_comprimido = 'notex.gz'
         archivo_descomprimido = 'compress_new.mp3'
         self.assertRaises(logicaComprension.ErrorNoExist, descomprimir_audio, archivo_comprimido, archivo_descomprimido)
 
-    #CASO ERROR 3
     def test_descomprimir_ruta_vacia(self): 
         archivo_comprimido = 'audio1.mp3'  
         archivo_descomprimido =''

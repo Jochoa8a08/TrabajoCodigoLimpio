@@ -1,0 +1,3 @@
+# Este archivo contiene las rutas que se van a excluir del control de versiones con Git
+# Carpeta temporal de archivos compilados de Python
+__pycache__

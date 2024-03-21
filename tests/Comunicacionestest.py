@@ -94,8 +94,6 @@ class TestComprension(unittest.TestCase):
         except logicaComprension.CaracterEspecial:
             pass
 
-if __name__ == '__main__':
-    unittest.main()
 
 class PruebasDescomprension(unittest.TestCase):
     """

@@ -68,7 +68,7 @@ class CompressApp(App):
         popup_layout.add_widget(Label(text=message))
         close_button = Button(text="Cerrar")
         popup_layout.add_widget(close_button)
-        popup = Popup(title="Error", content=popup_layout, size_hint=(None, None), size=(400, 200))
+        popup = Popup(title="Error", content=popup_layout, size_hint=(None, None), size=(600, 300))
         close_button.bind(on_press=popup.dismiss)
         popup.open()
 

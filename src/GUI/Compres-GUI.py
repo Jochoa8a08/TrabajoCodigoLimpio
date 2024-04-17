@@ -4,44 +4,78 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
-from kivy.core.window import Window
 import os
 import sys
+import threading
 
 sys.path.append("src")
 from Compress.logicaComprension import (
-    comprimir_audio, comprimir_audio_tamaño_corto, comprimir_audio_tamaño_largo, 
-    descomprimir_audio, descomprimir_audio_tamaño_corto, descomprimir_audio_tamaño_largo,
-    ErrorExtension, ErrorNoExist, VacioError, ErrorArchivoComprimido, ErrorTamañoGrande, LongitudExcesiva, CaracterEspecial
-)
+    comprimir_audio, descomprimir_audio, reproducir_audio)
 
 class CompressApp(App):
     def build(self):
-        layout = GridLayout(cols=2, padding=20, spacing=20)
+        # Creación del diseño principal
+        self.layout = GridLayout(cols=2, padding=20, spacing=20)
 
-        layout.add_widget(Label(text="Ruta del archivo:"))
-        self.file_path = TextInput(font_size=20, multiline=False)
-        layout.add_widget(self.file_path)
+        # Widgets de entrada de archivo y nombre
+        self.layout.add_widget(Label(text="Ruta del archivo:"))
+        self.file_path = TextInput(font_size=25, multiline=False)
+        self.layout.add_widget(self.file_path)
 
-        layout.add_widget(Label(text="Nombre de salida:"))
-        self.file_name = TextInput(font_size=20, multiline=False)
-        layout.add_widget(self.file_name)
+        self.layout.add_widget(Label(text="Nombre de salida:"))
+        self.file_name = TextInput(font_size=25, multiline=False)
+        self.layout.add_widget(self.file_name)
 
-        compress_button = Button(text="Comprimir", font_size=20)
-        layout.add_widget(compress_button)
-        compress_button.bind(on_press=self.handle_compression)
+        # Botones para comprimir, descomprimir y reproducir
+        compress_button = Button(text="Comprimir", font_size=25)
+        compress_button.bind(on_press=self.compression)
+        self.layout.add_widget(compress_button)
 
-        decompress_button = Button(text="Descomprimir", font_size=20)
-        layout.add_widget(decompress_button)
-        decompress_button.bind(on_press=self.handle_decompression)
+        decompress_button = Button(text="Descomprimir", font_size=25)
+        decompress_button.bind(on_press=self.descompression)
+        self.layout.add_widget(decompress_button)
 
-        self.status_label = Label(font_size=18)
-        layout.add_widget(self.status_label)
-        layout.add_widget(Label())
+        self.reproducir_button = Button(text="Reproducir audio descomprimido", font_size=25)
+        self.reproducir_button.bind(on_press=self.play)
+        self.layout.add_widget(self.reproducir_button)
 
-        return layout
+        # Etiqueta de estado
+        self.status_label = Label(font_size=20)
+        self.layout.add_widget(self.status_label)
 
-    def handle_compression(self, instance):
+
+        # Botón para limpiar entradas
+        clear_button = Button(text="Limpiar entradas", font_size=25)
+        clear_button.bind(on_press=self.clear_inputs)
+        self.layout.add_widget(clear_button)
+
+        return self.layout
+
+    def clear_inputs(self, instance):
+        self.file_path.text = ""
+        self.file_name.text = ""
+        self.status_label.text = "Las Entradas estan limpias"
+
+    def play(self, instance):
+        if not hasattr(self, 'playing') or not self.playing:
+            file_name = self.file_name.text + '.mp3'
+            try:
+                self.playing = True
+                threading.Thread(target=self.play_audio, args=(file_name,)).start()
+            except Exception as e:
+                self.show_popup(str(e))
+        else:
+            self.show_popup("Ya se está reproduciendo un audio.")
+
+    def play_audio(self, file_name):
+        try:
+            reproducir_audio(file_name)
+        except Exception as e:
+            self.show_popup(str(e))
+        finally:
+            self.playing = False
+
+    def compression(self, instance):
         file_path = self.file_path.text
         file_name = self.file_name.text + '.gz'
         compressed_path = os.path.join(os.path.dirname(file_path), file_name)
@@ -50,18 +84,20 @@ class CompressApp(App):
             self.status_label.text = "Archivo comprimido con éxito!"
         except Exception as e:
             self.show_popup(str(e))
+            self.status_label.text ="ERROR"
 
-    def handle_decompression(self, instance):
+    def descompression(self, instance):
         file_path = self.file_path.text
         if not file_path.lower().endswith('.gz'):
-            file_path += '.gz'  # Añade automáticamente la extensión .gz si no está presente
-        file_name = self.file_name.text
+            file_path += '.gz'
+        file_name = self.file_name.text + '.mp3'
         decompressed_path = os.path.join(os.path.dirname(file_path), file_name)
         try:
             descomprimir_audio(file_path, decompressed_path)
             self.status_label.text = "Archivo descomprimido con éxito!"
         except Exception as e:
             self.show_popup(str(e))
+            self.status_label.text ="ERROR"
 
     def show_popup(self, message):
         popup_layout = GridLayout(cols=1)

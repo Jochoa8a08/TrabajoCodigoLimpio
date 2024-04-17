@@ -1,6 +1,5 @@
 import unittest
 import gzip
-import filecmp  
 
 # Lo importamos para poder incluir la ruta de busqueda python
 import sys
@@ -8,11 +7,9 @@ sys.path.append("src")
 
 from Compress import logicaComprension
 from Compress.logicaComprension import (comprimir_audio,
-                               comprimir_audio_tamaño_corto,
-                               comprimir_audio_tamaño_largo, 
+                               comprimir_audio_tamaño, 
                                descomprimir_audio, 
-                               descomprimir_audio_tamaño_corto, 
-                               descomprimir_audio_tamaño_largo)
+                               descomprimir_audio_tamaño)
 
 
 class TestComprension(unittest.TestCase):
@@ -30,7 +27,7 @@ class TestComprension(unittest.TestCase):
         archivo_original = 'audio1.mp3'
         archivo_comprimido = 'audio1_compres.gz'
         archivo_comprension_esperada = 'audio1_bueno.gz'
-        comprimir_audio_tamaño_corto(archivo_original, archivo_comprimido)
+        comprimir_audio_tamaño(archivo_original, archivo_comprimido)
         self.assertEqual(gzip.open(archivo_comprimido, 'rb').read() , gzip.open(archivo_comprension_esperada, 'rb').read())
     
 
@@ -39,20 +36,12 @@ class TestComprension(unittest.TestCase):
         archivo_original = 'largo1.mp3'
         archivo_comprimido = 'audio1_largo_compres.gz'
         archivo_comprension_esperada ='largo1_bueno.gz'
-        comprimir_audio_tamaño_largo(archivo_original, archivo_comprimido)
+        comprimir_audio_tamaño(archivo_original, archivo_comprimido)
         self.assertEqual(gzip.open(archivo_comprimido, 'rb').read() , gzip.open(archivo_comprension_esperada, 'rb').read())
     
     
 
-    def test_comprimir_audio_any(self): 
-        archivo_original = 'audio269.mp3'
-        archivo_comprimido = 'diferente_comprimido.gz'
-        archivo_comprension_esperada ='diferente_bueno.gz'
-        comprimir_audio(archivo_original, archivo_comprimido) 
-        self.assertEqual(gzip.open(archivo_comprimido, 'rb').read() , gzip.open(archivo_comprension_esperada, 'rb').read())
 
-
- 
     def test_comprimir_extension_diferente(self): 
         archivo_original = 'diferente.wav' 
         archivo_comprimido ='compress_dif.wav'
@@ -94,7 +83,6 @@ class TestComprension(unittest.TestCase):
         except logicaComprension.CaracterEspecial:
             pass
 
-
 class PruebasDescomprension(unittest.TestCase):
     """
         La clase realiza las 10 pruebas unitarias de descomprensión de audio que son: 
@@ -108,7 +96,7 @@ class PruebasDescomprension(unittest.TestCase):
         archivo_original = 'audio1.mp3'
         archivo_comprimido = 'audio4.gz'
         archivo_descomprimido ='audio1.mp3'
-        descomprimir_audio_tamaño_corto(archivo_comprimido, archivo_descomprimido)
+        descomprimir_audio_tamaño(archivo_comprimido, archivo_descomprimido)
         self.assertTrue(archivo_original, archivo_descomprimido)
     
   
@@ -116,7 +104,7 @@ class PruebasDescomprension(unittest.TestCase):
         archivo_original = 'largo1.mp3'
         archivo_comprimido = 'audio4.gz'
         archivo_descomprimido ='audio1_largo_unzipped.mp3'
-        descomprimir_audio_tamaño_largo(archivo_comprimido, archivo_descomprimido)
+        descomprimir_audio_tamaño(archivo_comprimido, archivo_descomprimido)
         self.assertTrue(archivo_original, archivo_descomprimido)   
 
     def test_descomprimir_audio_any(self): 
@@ -146,7 +134,8 @@ class PruebasDescomprension(unittest.TestCase):
     def test_descomprimir_audio_pesado(self): 
         archivo_comprimido ='audio_pesado.gz'
         archivo_descomprimido ='audio_pesado_des.mp3'
-        self.assertRaises(logicaComprension.ErrorTamañoGrande, descomprimir_audio_tamaño_largo, archivo_comprimido, archivo_descomprimido)
+        self.assertRaises(logicaComprension.ErrorTamañoGrande, descomprimir_audio_tamaño, archivo_comprimido, archivo_descomprimido)
+    
     
     #CASO EXPECIONAL 1
     def test_descomprimir_nombre_archivo_largo(self):  

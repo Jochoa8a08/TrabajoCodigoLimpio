@@ -12,6 +12,7 @@ El proyecto consiste en un conjunto de funciones y pruebas unitarias en Python p
 
 - Prerrequisitos:
 Python instalado en el sistema.
+instalar kivy con el comando !pip install kivy
 Acceso al sistema de archivos donde se encuentren los archivos de audio a comprimir o descomprimir.
 
 - Ejecución:

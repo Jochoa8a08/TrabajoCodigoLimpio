@@ -2,6 +2,17 @@ import gzip
 import os
 import pygame
 
+
+"""
+    Reproduce un archivo de audio utilizando pygame.
+
+    Parámetros:
+    ruta (str): Ruta al archivo de audio a reproducir.
+
+    Lanza:
+    pygame.error: Si ocurre un error durante la reproducción del audio.
+    """
+
 def reproducir_audio(ruta):
     pygame.init()
     pygame.mixer.init()
@@ -37,7 +48,20 @@ class CaracterEspecial(Exception):
 tamaño_umbral_archivo = 301
 caracteres_especiales = "@"
 
-# Funciones de compresión
+"""
+    Comprime un archivo de audio en formato .mp3 o .gz.
+
+    Parámetros:
+    archivo_original (str): Ruta al archivo de audio original.
+    archivo_comprimido (str): Ruta donde se guardará el archivo comprimido.
+
+    Lanza:
+    VacioError: Si la ruta del archivo original está vacía.
+    ErrorExtension: Si el archivo original no tiene la extensión .mp3 o .gz.
+    ErrorNoExist: Si el archivo original no existe.
+    LongitudExcesiva: Si la longitud de la ruta del archivo excede los 20 caracteres.
+    CaracterEspecial: Si el nombre del archivo original contiene caracteres especiales.
+    """
 def comprimir_audio(archivo_original, archivo_comprimido):
 
     
@@ -74,7 +98,20 @@ def comprimir_audio_tamaño(archivo_original, archivo_comprimido):
 
 
 
-#DESCOMPRENSION
+"""
+    Descomprime un archivo de audio comprimido en formato .gz.
+
+    Parámetros:
+    archivo_comprimido (str): Ruta al archivo de audio comprimido (.gz).
+    archivo_descomprimido (str): Ruta donde se guardará el archivo descomprimido.
+
+    Lanza:
+    VacioError: Si la ruta del archivo comprimido está vacía.
+    ErrorExtension: Si el archivo comprimido no tiene la extensión .gz.
+    ErrorNoExist: Si el archivo comprimido no existe.
+    LongitudExcesiva: Si la longitud de la ruta del archivo comprimido excede los 20 caracteres.
+    CaracterEspecial: Si el nombre del archivo comprimido contiene caracteres especiales.
+    """
         
 def descomprimir_audio(archivo_comprimido, archivo_descomprimido):
 

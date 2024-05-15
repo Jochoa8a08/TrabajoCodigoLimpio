@@ -72,20 +72,30 @@ def main():
             print("-----------")
 
         elif opcion == '6':
-            while True:
-                id = ControladorArchivos.solicitar_id()
-                archivo = ControladorArchivos.ConsultarArchivo(id)
-                if archivo:
-                    print(f"ID: {archivo.id}")
-                    print(f"Nombre: {archivo.nombre}")
-                    print(f"Extensión: {archivo.extension}")
-                    print(f"Tamaño Kb: {archivo.tamaño}")
-                    print(f"Fecha de creación: {archivo.fecha_creacion}")
-                    break
-                else:
-                    print("Archivo no encontrado. Intente de nuevo.")
+            ids = ControladorArchivos.ConsultarTodosLosIds()
+            if ids:
+                print("---IDs disponibles en la base de datos---")
+                for id in ids:
+                    print(id)
+                while True:
+                    id = ControladorArchivos.solicitar_id()
+                    archivo = ControladorArchivos.ConsultarArchivo(id)
+                    if archivo:
+                        print(f"ID: {archivo.id}")
+                        print(f"Nombre: {archivo.nombre}")
+                        print(f"Extensión: {archivo.extension}")
+                        print(f"Tamaño Kb: {archivo.tamaño}")
+                        print(f"Fecha de creación: {archivo.fecha_creacion}")
+                        break
+                    else:
+                        print("Archivo no encontrado. Intente de nuevo.")
+            else:
+                print("No existen IDs en la base de datos.")
+                print("-----------")
 
         elif opcion == '7':
+            print("Validando para crear la Tabla...")
+            ControladorArchivos.CrearTabla()
             ids = ControladorArchivos.ConsultarTodosLosIds()
             if ids:
                 print("---IDs en la base de datos---")

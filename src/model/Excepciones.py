@@ -12,3 +12,7 @@ class ErrorInsertarArchivo(Exception):
 
 class ErrorModificarArchivo(Exception):
     """Ese id no existe intente de nuevo"""
+
+class ErrorTablaNoExiste(Exception):
+    "No hay ninguna tabla"
+    pass

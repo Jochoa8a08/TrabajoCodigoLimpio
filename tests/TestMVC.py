@@ -2,7 +2,6 @@ import unittest
 import sys
 import os
 from datetime import date
-from unittest.mock import patch, MagicMock
 
 sys.path.append("src")
 sys.path.append(".")
@@ -10,17 +9,18 @@ sys.path.append(".")
 from model.Archivo import Archivo
 from controller.ControladorArchivos import ControladorArchivos
 
-
 class ControllerTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         """Se ejecuta al inicio de todas las pruebas"""
         print("Invocando setUpClass")
-        ControladorArchivos.CrearTabla()  # Asegura que al inicio de las pruebas, la tabla esté creada
+        ControladorArchivos.EliminarTabla()
+        ControladorArchivos.CrearTabla()
 
+    
+    
     def testInsertarArchivo(self):
-        
         # Prueba que se inserte correctamente un archivo en la tabla
         print("Ejecutando testInsertarArchivo")
         ControladorArchivos.EliminarArchivo(1234)
@@ -41,7 +41,16 @@ class ControllerTest(unittest.TestCase):
     def testConsultarArchivo(self):
         # Prueba que se consulte correctamente un archivo en la tabla
         print("Ejecutando testConsultarArchivo")
+
+        ruta_archivo = "audio1.mp3"
+        os.path.exists(ruta_archivo)
         id = 1234
+        nombre = os.path.basename(ruta_archivo)
+        extension = os.path.splitext(nombre)[1][1:]  # Obtener la extensión sin el punto
+        tamaño = os.path.getsize(ruta_archivo)
+        archivo = Archivo(id=id, nombre=nombre, extension=extension, tamaño=tamaño, fecha_creacion=None)
+        ControladorArchivos.InsertarArchivo(archivo)
+
         nombre ="audio1.mp3"
         archivo = ControladorArchivos.ConsultarArchivo(id)
         self.assertIsNotNone(archivo)
@@ -49,6 +58,7 @@ class ControllerTest(unittest.TestCase):
         self.assertEqual(nombre,archivo.nombre)
 
     def testModificarArchivo(self):
+        print("Ejecutando testModificarArchivo ")
         #Prueba que se modifique correctamente un archivo en la tabla"""
         ruta_archivo = "audio1.mp3"
         if os.path.exists(ruta_archivo):
@@ -60,17 +70,6 @@ class ControllerTest(unittest.TestCase):
             self.assertIsNotNone(archivo_modificado)
             self.assertEqual(archivo_modificado.nombre, nuevo_nombre)
             self.assertEqual(archivo_modificado.extension, nueva_extension)
-
-
-    def testEliminarArchivo(self):
-        # Prueba que se elimine correctamente un archivo en la tabla
-        print("Ejecutando testEliminarArchivo")
-        #........
-
-    @classmethod
-    def tearDownClass(cls):
-        """Se ejecuta al final de todas las pruebas"""
-        print("Invocando tearDownClass")
 
 
 if __name__ == '__main__':

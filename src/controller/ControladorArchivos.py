@@ -6,11 +6,12 @@
 """
 import psycopg2
 import sys
+import os
 sys.path.append( "src" )
 sys.path.append( "." )
 
 from model.Archivo import Archivo
-from model.Excepciones import ExcepcionCrearTabla , ExcepcionEliminarTabla, ErrorModificarArchivo, ErrorInsertarArchivo
+from model.Excepciones import ExcepcionCrearTabla , ExcepcionEliminarTabla, ErrorModificarArchivo, ErrorInsertarArchivo, ErrorConsultarArchivo, ErrorModificar
 import SecretConfig
 
 tabla = """CREATE TABLE Archivos (id SERIAL PRIMARY KEY,nombre TEXT NOT NULL,extension TEXT NOT NULL,tamaño INTEGER, fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP); """
@@ -74,7 +75,10 @@ class ControladorArchivos:
         fila = cursor.fetchone()
         if fila:
             return Archivo(id=fila[0], nombre=fila[1], extension=fila[2], tamaño=fila[3], fecha_creacion=fila[4])
-        return None
+        else:
+            if not os.path.exists(id):
+                 raise ErrorConsultarArchivo(f"No se encontró el archivo con id {id}.")
+    
     
     
     #Modificar
@@ -86,6 +90,10 @@ class ControladorArchivos:
         if not cursor.fetchone():
             cursor.close()
             raise ErrorModificarArchivo("Ese id no existe, intente de nuevo")
+        
+        if nombre is None and extension is None:
+            cursor.close()
+            raise ErrorModificar("No se puede modificar el ID del archivo")
 
         updates = []
         params = []

@@ -7,12 +7,16 @@ class ExcepcionEliminarTabla(Exception):
     """No hay ninguna tabla que eliminar"""
     pass
 
-class ErrorInsertarArchivo(Exception):
+class ErrorConsultarArchivo(Exception):
     """El archivo no existe"""
+    pass
 
 class ErrorModificarArchivo(Exception):
     """Ese id no existe intente de nuevo"""
 
+class ErrorModificar(Exception):
+    """No puedes modificar el ID"""
+    
 class ErrorInsertarArchivo(Exception):
     """No se puede ingresar letras en el ID"""
     pass

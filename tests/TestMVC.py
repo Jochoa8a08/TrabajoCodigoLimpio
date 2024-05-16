@@ -8,7 +8,7 @@ sys.path.append(".")
 
 from model.Archivo import Archivo
 from controller.ControladorArchivos import ControladorArchivos
-from model.Excepciones import ErrorInsertarArchivo
+from model.Excepciones import ErrorInsertarArchivo, ErrorConsultarArchivo, ErrorModificar
 from model import Excepciones
 
 class ControllerTest(unittest.TestCase):
@@ -106,9 +106,17 @@ class ControllerTest(unittest.TestCase):
             tamaño = os.path.getsize(ruta_archivo)
             archivo = Archivo(id=id, nombre=nombre, extension=extension, tamaño=tamaño, fecha_creacion=None)
             self.assertRaises(ErrorInsertarArchivo, ControladorArchivos.InsertarArchivo, archivo)
-            
-            
-        
+  
+    def testErrorConsultar(self):
+        """Prueba que lance error cuando consulte un archivo que no exista"""
+        print("Ejecuntando testErrorConsultar")
+        ruta_archivo = "audio1.mp3"
+        os.path.exists(ruta_archivo)
+        id = 9999
+        self.assertRaises(ErrorConsultarArchivo, ControladorArchivos.ConsultarArchivo, id)
+
+    
+    
    
 if __name__ == '__main__':
     unittest.main()

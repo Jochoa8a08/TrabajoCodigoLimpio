@@ -81,7 +81,7 @@ En el archivo SecretConfig.py  establezca en este archivo los datos de conexion 
 ## Configuracion de la base de datos
 
 Esta aplicacion requiere que este creada una tabla llamada Archivos.
-Utilice el script en sql\crear-usuarios.sql para crear antes de ejecutar la aplicacion
+Utilice el script en sql\archivos.sql para crear antes de ejecutar la aplicacion
 
 ## Uso en base de datos
 

@@ -12,7 +12,8 @@ El proyecto consiste en un conjunto de funciones y pruebas unitarias en Python p
 
 - Prerrequisitos:
 Python instalado en el sistema.
-Instalar kivy con el comando !pip install kivy
+Crea una base de datos  PostgreSQL y sus respectivos datos de acceso
+Instalar psycopg2 con el comando pip install psycopg2
 Instalar 
 Acceso al sistema de archivos donde se encuentren los archivos de audio a comprimir o descomprimir.
 
@@ -67,3 +68,28 @@ módulos, incluyendo las siguientes lineas al inicio del módulo de pruebas
   import sys
   sys.path.append("src")
 `
+
+
+# database-mvc
+
+## Requisitos
+
+Asegurese de tener una base de datos PostgreSQL y sus respectivos datos de acceso
+
+En el archivo SecretConfig.py  establezca en este archivo los datos de conexion a su base de datos.
+
+## Configuracion de la base de datos
+
+Esta aplicacion requiere que este creada una tabla llamada Archivos.
+Utilice el script en sql\crear-usuarios.sql para crear antes de ejecutar la aplicacion
+
+## Uso en base de datos
+
+Para ejecutas la consola , desde la carpeta de la base de datos , use el comando 
+
+ TrabajoCodigoLimpio>python src/Consola/ConsolaDB.py
+
+Para ejecutar las pruebas unitarias, desde la carpeta del programa, use el comando
+
+`
+  TrabajoCodigoLimpio>python tests/testMVC.py

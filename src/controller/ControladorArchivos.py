@@ -1,12 +1,16 @@
 #ControladorArchivos.py
+"""
+    Pertenece a la capa de Acceso a Datos
+
+    Controla las operaciones de almacenamiento de la clase Archivo
+"""
+import psycopg2
 import sys
 sys.path.append( "src" )
 sys.path.append( "." )
 
-import psycopg2
-
 from model.Archivo import Archivo
-from model.Excepciones import ExcepcionCrearTabla , ExcepcionEliminarTabla,ErrorModificarArchivo
+from model.Excepciones import ExcepcionCrearTabla , ExcepcionEliminarTabla, ErrorModificarArchivo, ErrorInsertarArchivo
 import SecretConfig
 
 tabla = """CREATE TABLE Archivos (id SERIAL PRIMARY KEY,nombre TEXT NOT NULL,extension TEXT NOT NULL,tamaño INTEGER, fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP); """
@@ -41,17 +45,27 @@ class ControladorArchivos:
             print(e)
         finally:
             cursor.close()
+
+    def BorrarFilas():
+        """ Borra todas las filas de la tabla Archivos (DELETE)"""
+        sql = "DELETE FROM Archivos;"
+        cursor = ControladorArchivos.ObtenerCursor()
+        cursor.execute(sql)
+        cursor.connection.commit()
+        cursor.close()
     
 
     #INSERTAR
     def InsertarArchivo( archivo : Archivo ):
         """ Recibe un a instancia de la clase Archivo y la inserta en la tabla respectiva"""
+        if not str(archivo.id).isdigit():
+            raise ErrorInsertarArchivo("El ID debe ser un número.")
         cursor = ControladorArchivos.ObtenerCursor()
         cursor.execute( f"""insert into Archivos (id, nombre, extension,tamaño)
                         values ('{archivo.id}', '{archivo.nombre}', '{archivo.extension}',  
                             '{archivo.tamaño}') """ )
-
         cursor.connection.commit()
+        cursor.close()
 
     #CONSULTAR
     def ConsultarArchivo(id):
@@ -96,10 +110,11 @@ class ControladorArchivos:
     #ELIMINAR
     def EliminarArchivo(id):
         cursor = ControladorArchivos.ObtenerCursor()
-        cursor.execute("DELETE FROM Archivos WHERE id = %s;", (id,))
+        cursor.execute("DELETE FROM Archivos WHERE id = %s RETURNING id;", (id,))
         cursor.connection.commit()
- 
-    
+        cursor.close()
+
+
     def ConsultarTodosLosIds():
         cursor = ControladorArchivos.ObtenerCursor()
         cursor.execute("SELECT id FROM Archivos;")

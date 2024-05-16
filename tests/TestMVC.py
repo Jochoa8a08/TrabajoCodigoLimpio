@@ -81,19 +81,18 @@ class ControllerTest(unittest.TestCase):
             self.assertEqual(archivo_modificado.extension, nueva_extension)
 
     def testEliminarArchivo(self):
-        """ Prueba la funcionalidad de eliminar archivos """
+        """Prueba la funcionalidad de eliminar archivos"""
         print("Ejecutando testEliminarArchivo")
-        ruta_archivo = "audio1.mp3"
+        ruta_archivo = "4321.mp3"
         if os.path.exists(ruta_archivo):
-            id = 4321
+            id = 4545
             nombre = os.path.basename(ruta_archivo)
             extension = os.path.splitext(nombre)[1][1:]  # Obtener la extensión sin el punto
             tamaño = os.path.getsize(ruta_archivo)
             archivo = Archivo(id=id, nombre=nombre, extension=extension, tamaño=tamaño, fecha_creacion=None)
             ControladorArchivos.InsertarArchivo(archivo)
             ControladorArchivos.EliminarArchivo(id)
-            archivo_eliminado = ControladorArchivos.ConsultarArchivo(id)
-            self.assertEqual(None, archivo_eliminado)
+            self.assertRaises(ErrorConsultarArchivo, ControladorArchivos.ConsultarArchivo, id)
 
     def testErrorInsertar(self):
         """ Prueba que se lance ErrorInsertarArchivo cuando el ID no es un dígito """

@@ -79,8 +79,6 @@ class ControladorArchivos:
             if not os.path.exists(id):
                  raise ErrorConsultarArchivo(f"No se encontró el archivo con id {id}.")
     
-    
-    
     #Modificar
     def ModificarArchivo(id, nombre=None, extension=None):
         cursor = ControladorArchivos.ObtenerCursor()

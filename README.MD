@@ -80,15 +80,15 @@ Asegurese de tener una base de datos PostgreSQL y sus respectivos datos de acces
 
 Establezca el puerto 5432 que es por defecto.
 
----PGHOST='xxx'
+-PGHOST='xxx'
 
----PGDATABASE='xxxx'
+-PGDATABASE='xxxx'
 
----PGUSER='xxxxx'
+-PGUSER='xxxxx'
 
----PGPASSWORD='xxx'
+-PGPASSWORD='xxx'
 
----PGPORT = 'xxx'
+-PGPORT = 'xxx'
 
 
 ## Configuracion de la base de datos

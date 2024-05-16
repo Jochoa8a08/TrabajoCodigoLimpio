@@ -93,3 +93,13 @@ Para ejecutar las pruebas unitarias, desde la carpeta del programa, use el coman
 
 `
   TrabajoCodigoLimpio>python tests/testMVC.py
+`
+Para poder ejecutarlas desde la carpeta raiz, debe indicar la ruta de busqueda donde se encuentran los
+módulos, incluyendo las siguientes lineas al inicio del módulo de pruebas
+
+`
+  import sys
+  sys.path.append("src")
+`
+
+Recuerde que el archivo que desee insertar debe existir y no podra insertar un archivo que no exista , verifique los archivos guardados localmente.

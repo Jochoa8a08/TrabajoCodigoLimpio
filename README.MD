@@ -76,13 +76,18 @@ módulos, incluyendo las siguientes lineas al inicio del módulo de pruebas
 
 Asegurese de tener una base de datos PostgreSQL y sus respectivos datos de acceso
 En el archivo SecretConfig.py  establezca en este archivo los datos de conexion a su base de datos.
+
 Establezca el puerto 5432 que es por defecto.
 
---- PGHOST='xxx'
---- PGDATABASE='xxxx'
---- PGUSER='xxxxx'
---- PGPASSWORD='xxx'
---- PGPORT = 'xxx'
+---PGHOST='xxx'
+
+---PGDATABASE='xxxx'
+
+---PGUSER='xxxxx'
+
+---PGPASSWORD='xxx'
+
+---PGPORT = 'xxx'
 
 
 ## Configuracion de la base de datos

@@ -4,4 +4,4 @@ PGHOST='xxx'
 PGDATABASE='xxxx'
 PGUSER='xxxxx'
 PGPASSWORD='xxx'
-PGPORT = 5432
+PGPORT = 'xxx'

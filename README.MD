@@ -98,18 +98,17 @@ Utilice el script en sql\archivos.sql para crear antes de ejecutar la aplicacion
 
 ## Uso en base de datos
 
--Para ejecutas la consola , desde la carpeta de la base de datos , use el comando 
-
+Para ejecutas la consola , desde la carpeta de la base de datos , use el comando 
 `
  TrabajoCodigoLimpio>python src/Consola/ConsolaDB.py
 `
 
--Para ejecutar las pruebas unitarias, desde la carpeta del programa, use el comando
+Para ejecutar las pruebas unitarias, desde la carpeta del programa, use el comando
 
 `
   TrabajoCodigoLimpio>python tests/testMVC.py
 `
--Para poder ejecutarlas desde la carpeta raiz, debe indicar la ruta de busqueda donde se encuentran los
+Para poder ejecutarlas desde la carpeta raiz, debe indicar la ruta de busqueda donde se encuentran los
 módulos, incluyendo las siguientes lineas al inicio del módulo de pruebas
 
 `

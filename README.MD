@@ -61,7 +61,7 @@ módulos, incluyendo las siguientes lineas al inicio del módulo de pruebas
 
 
 
-## Database-MVC
+## Database-MVC.
 
 ### Requisitos:
 Asegúrese de tener una base de datos PostgreSQL y sus respectivos datos de acceso. Modifique el archivo `SecretConfig-Sample.py` a `SecretConfig.py` e ingrese en este archivo los datos de conexión a su base de datos.

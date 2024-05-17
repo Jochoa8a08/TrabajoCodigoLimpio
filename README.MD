@@ -28,7 +28,7 @@ El proyecto está implementado en Python y utiliza el módulo `gzip` para la com
   - Contiene las funciones `comprimir_audio()` y `descomprimir_audio()` para realizar la compresión y descompresión de archivos de audio, respectivamente.
   - Define excepciones personalizadas para manejar errores específicos durante la ejecución.
 
-  - **ControladorArchivos.py**:
+- **ControladorArchivos.py**:
   - Contiene funciones para interactuar con la base de datos PostgreSQL, gestionando operaciones CRUD (Crear, Leer, Actualizar, Eliminar) para los archivos.
   - Incluye métodos como `CrearTabla()`, `InsertarArchivo()`, `ConsultarArchivo()`, `ModificarArchivo()`, y `EliminarArchivo()` para manejar los datos de los archivos de audio almacenados en la base de datos.
   - Implementa manejo de errores robusto a través de excepciones personalizadas para garantizar que los errores en las operaciones de base de datos sean comunicados claramente al usuario.

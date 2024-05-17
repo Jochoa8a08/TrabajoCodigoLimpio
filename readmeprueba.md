@@ -48,5 +48,5 @@ Para ejecutar la consola, desde la carpeta del programa, use el comando:
 TrabajoCodigoLimpio>python src/Consola/ComunicacionesConsole.py
 
 
-Para ejecutar las pruebas unitarias, desde la carpeta del programa, use el comando:
+Para ejecutar las pruebas unitarias, desde la carpeta del programa, use el comando: S
 

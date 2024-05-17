@@ -48,7 +48,7 @@ Para ejecutas la consola , desde la carpeta del programa , use el comando
 
  `TrabajoCodigoLimpio>python src/Consola/ComunicacionesConsole.py`
 
-Para ejecutar las pruebas unitarias, desde la carpeta del programa, use el comando
+Para ejecutar las pruebas unitarias, desde la carpeta del programa, use el comando.
 
 `TrabajoCodigoLimpio>python tests/Comunicacionestest.py`
 
@@ -56,7 +56,7 @@ Para poder ejecutarlas desde la carpeta raiz, debe indicar la ruta de busqueda d
 módulos, incluyendo las siguientes lineas al inicio del módulo de pruebas
 
 
-  `import sys`
+  `import sys` 
   `sys.path.append("src")`
 
 

@@ -9,13 +9,13 @@ class ExcepcionEliminarTabla(Exception):
 
 class ErrorConsultarArchivo(Exception):
     """El archivo no existe"""
-    pass
+    
 
 class ErrorModificarArchivo(Exception):
-    """Ese id no existe intente de nuevo"""
+    """Ese id no existe"""
 
-class ErrorModificar(Exception):
-    """No puedes modificar el ID"""
+class ErrorEliminarArchivo(Exception):
+    "El archivo no existe"
     
 class ErrorInsertarArchivo(Exception):
     """No se puede ingresar letras en el ID"""

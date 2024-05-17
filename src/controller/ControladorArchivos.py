@@ -11,7 +11,7 @@ sys.path.append( "src" )
 sys.path.append( "." )
 
 from model.Archivo import Archivo
-from model.Excepciones import ExcepcionCrearTabla , ExcepcionEliminarTabla, ErrorModificarArchivo, ErrorInsertarArchivo, ErrorConsultarArchivo, ErrorModificar
+from model.Excepciones import ExcepcionCrearTabla , ExcepcionEliminarTabla, ErrorModificarArchivo, ErrorInsertarArchivo,ErrorEliminarArchivo
 import SecretConfig
 
 tabla = """CREATE TABLE Archivos (id SERIAL PRIMARY KEY,nombre TEXT NOT NULL,extension TEXT NOT NULL,tamaño INTEGER, fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP); """
@@ -68,17 +68,20 @@ class ControladorArchivos:
         cursor.connection.commit()
         cursor.close()
 
-    #CONSULTAR
+
+
     def ConsultarArchivo(id):
         cursor = ControladorArchivos.ObtenerCursor()
-        cursor.execute("SELECT id, nombre, extension, tamaño, fecha_creacion FROM Archivos WHERE id = %s;", (id,))
-        fila = cursor.fetchone()
-        if fila:
-            return Archivo(id=fila[0], nombre=fila[1], extension=fila[2], tamaño=fila[3], fecha_creacion=fila[4])
-        else:
-            if not os.path.exists(id):
-                 raise ErrorConsultarArchivo(f"No se encontró el archivo con id {id}.")
-    
+        try:
+            cursor.execute("SELECT id, nombre, extension, tamaño, fecha_creacion FROM Archivos WHERE id = %s;", (id,))
+            fila = cursor.fetchone()
+            if fila:
+                return Archivo(id=fila[0], nombre=fila[1], extension=fila[2], tamaño=fila[3], fecha_creacion=fila[4])
+        finally:
+            cursor.close()
+        return  None
+
+
     #Modificar
     def ModificarArchivo(id, nombre=None, extension=None):
         cursor = ControladorArchivos.ObtenerCursor()
@@ -89,9 +92,7 @@ class ControladorArchivos:
             cursor.close()
             raise ErrorModificarArchivo("Ese id no existe, intente de nuevo")
         
-        if nombre is None and extension is None:
-            cursor.close()
-            raise ErrorModificar("No se puede modificar el ID del archivo")
+   
 
         updates = []
         params = []
@@ -113,12 +114,24 @@ class ControladorArchivos:
         cursor.close()
     
 
-    #ELIMINAR
     def EliminarArchivo(id):
         cursor = ControladorArchivos.ObtenerCursor()
+        # Verificar primero si el archivo existe
+        cursor.execute("SELECT 1 FROM Archivos WHERE id = %s;", (id,))
+        existe = cursor.fetchone()
+        if not existe:
+            cursor.close()
+            raise ErrorEliminarArchivo(f"No se encontró el archivo con id {id} para eliminar.")
+        # Si existe, proceder con la eliminación
         cursor.execute("DELETE FROM Archivos WHERE id = %s RETURNING id;", (id,))
+        eliminado = cursor.fetchone()
+        if not eliminado:
+            # Manejo adicional en caso de que el DELETE no funcione como se espera
+            cursor.close()
+            raise ErrorEliminarArchivo("Error al intentar eliminar el archivo.")
         cursor.connection.commit()
         cursor.close()
+
 
 
     def ConsultarTodosLosIds():

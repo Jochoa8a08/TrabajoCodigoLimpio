@@ -33,11 +33,13 @@ def main():
             print("-----------")
 
         elif opcion == '3':
+            ControladorArchivos.CrearTabla()
             ruta_archivo = input("Ingrese el nombre del archivo: ")
             if os.path.exists(ruta_archivo):
                 while True:
                     id = ControladorArchivos.solicitar_id()
-                    if ControladorArchivos.ConsultarArchivo(id):
+                    archivo = ControladorArchivos.ConsultarArchivo(id)
+                    if archivo:
                         print("El ID ya existe. Intente de nuevo con otro ID.")
                     else:
                         nombre = os.path.basename(ruta_archivo)
@@ -48,21 +50,26 @@ def main():
                         print("Archivo insertado exitosamente.")
                         break
             else:
-                print("El archivo no existe. Por favor, verifique e intente nuevamente.")
+                    print("El archivo no existe. Por favor, verifique e intente nuevamente.")
+
 
         elif opcion == '4':
             while True:
+                ControladorArchivos.CrearTabla()
                 id = ControladorArchivos.solicitar_id()
+                archivo =ControladorArchivos.ConsultarArchivo(id)
                 nombre = input("Ingrese el nuevo nombre (deje en blanco si no desea cambiar): ")
                 extension = input("Ingrese la nueva extensión (deje en blanco si no desea cambiar): ")
                 try:
+                    
                     ControladorArchivos.ModificarArchivo(id, nombre, extension)
                     print("Archivo modificado exitosamente.")
                     break
                 except ErrorModificarArchivo as e:
                     print(e)
-
+        
         elif opcion == '5':
+            ControladorArchivos.CrearTabla()
             id = ControladorArchivos.solicitar_id()
             if ControladorArchivos.ConsultarArchivo(id):
                 ControladorArchivos.EliminarArchivo(id)

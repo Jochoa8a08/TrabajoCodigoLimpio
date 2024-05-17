@@ -102,7 +102,6 @@ Para ejecutas la consola , desde la carpeta de la base de datos , use el comando
 
 `
  TrabajoCodigoLimpio>python src/Consola/ConsolaDB.py
-
 `
 
 Para ejecutar las pruebas unitarias, desde la carpeta del programa, use el comando

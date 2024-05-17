@@ -28,9 +28,16 @@ El proyecto está implementado en Python y utiliza el módulo `gzip` para la com
   - Contiene las funciones `comprimir_audio()` y `descomprimir_audio()` para realizar la compresión y descompresión de archivos de audio, respectivamente.
   - Define excepciones personalizadas para manejar errores específicos durante la ejecución.
 
+  - **ControladorArchivos.py**:
+  - Contiene funciones para interactuar con la base de datos PostgreSQL, gestionando operaciones CRUD (Crear, Leer, Actualizar, Eliminar) para los archivos.
+  - Incluye métodos como `CrearTabla()`, `InsertarArchivo()`, `ConsultarArchivo()`, `ModificarArchivo()`, y `EliminarArchivo()` para manejar los datos de los archivos de audio almacenados en la base de datos.
+  - Implementa manejo de errores robusto a través de excepciones personalizadas para garantizar que los errores en las operaciones de base de datos sean comunicados claramente al usuario.
+  - Utiliza `psycopg2` para la conexión y manipulación de la base de datos, asegurando transacciones seguras y eficientes.
+
+
 ### Pruebas unitarias:
-- **Comunicacionestest.py**:
-  - Utiliza el módulo `unittest` de Python para realizar pruebas automatizadas de las funciones de compresión y descompresión.
+- **Comunicacionestest.py** y **TestMVC.py** 
+  - Utilizan el módulo `unittest` de Python para realizar pruebas automatizadas de las funciones de compresión y descompresión.
 
 - **ComunicacionesConsole.py**:
   - Proporciona una interfaz de usuario simple para que los usuarios compriman y descompriman archivos de audio. Utiliza las funciones proporcionadas por el módulo `logicaComprension`.
@@ -38,10 +45,10 @@ El proyecto está implementado en Python y utiliza el módulo `gzip` para la com
 ### Organización de los módulos:
 - **src**:
   - Contiene la carpeta `Compress` donde se encuentra el archivo `logicaComprension.py`.
-  - Contiene la carpeta `Consola` donde se encuentra el archivo `ComunicacionesConsole.py`.
+  - Contiene la carpeta `Consola` donde se encuentra el archivo `ComunicacionesConsole.py` y `ConsolaDB.py`.
 - **tests**:
   - Contiene el archivo `Comunicacionestest.py`.
-
+  - Contiene el archivo `TestMVC.py`.
 ## Uso
 
 Para ejecutas la consola , desde la carpeta del programa , use el comando 
